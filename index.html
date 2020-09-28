@@ -83,7 +83,6 @@
         }
 
         function deleteProduct(event, id) {
-            // console.log(event.target.parentNode);
             fetch(`/delete/${id}`, {
                 method: 'DELETE'
             })

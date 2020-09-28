@@ -49,6 +49,7 @@ client.connect(err => {
             })
     })
 
+    //UPDATE
     app.patch('/update/:id', (req, res) => {
         productCollection.updateOne({ _id: ObjectId(req.params.id) },
             {
@@ -60,6 +61,7 @@ client.connect(err => {
             })
     })
 
+    //DELETE
     app.delete('/delete/:id', (req, res) => {
         productCollection.deleteOne({ _id: ObjectId(req.params.id) })
             .then(result => {
