@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
+
 const password = '4L8iubZZuqYPAKJ';
 
 const uri = "mongodb+srv://organicUser:4L8iubZZuqYPAKJ@cluster0.sqmks.mongodb.net/organicdb?retryWrites=true&w=majority";
@@ -21,6 +23,7 @@ app.get('/', (req, res) => {
 
 client.connect(err => {
     const productCollection = client.db("organicdb").collection("products");
+
     app.get('/products', (req, res) => {
         productCollection.find({})
             .toArray((err, documents) => {
@@ -28,16 +31,19 @@ client.connect(err => {
             })
     })
 
-
-
-
-
     app.post("/addProduct", (req, res) => {
         const product = req.body;
         productCollection.insertOne(product)
             .then(result => {
                 console.log('data added successfully');
                 res.send('success');
+            })
+    })
+
+    app.delete('/delete/:id', (req, res) => {
+        productCollection.deleteOne({ _id: ObjectId(req.params.id) })
+            .then(result => {
+                console.log(result);
             })
     })
 });
